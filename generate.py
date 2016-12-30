@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-#Time-stamp: <2016-12-31 00:25:58 hamada>
+#Time-stamp: <2016-12-31 00:39:23 hamada>
 import time
 import glob
 import logging
@@ -41,19 +41,16 @@ logger.addHandler(ch)
 ## logger.error('error message')
 ## logger.critical('critical message')
 
-def get_quotes():
-    result = [ ]
-    result.append("There is always light behind the clouds. -- Louisa May Alcott")
-    result.append("Change before you have to. -- Jack Welch")
-    result.append("If you can dream it, you can do it. -- Walt Disney")
-    result.append("Love the life you live. Live the life you love. -- Bob Marley")
-    result.append("My life didn't please me, so I created my life. -- Coco Chanel")
-    result.append("It always seems impossible until it's done -- Nelson Mandela")
-    result.append("Peace begins with a smile. -- Mother Teresa")
-    result.append("Love dies only when growth stops. -- Pearl S. Buck")
-    result.append("There is more to life than increasing its speed. -- Mahatma Gandhi")
-    return result
+'''
 
+    c += "def get_quotes():\n"
+    c += "    result = [ ]\n"
+    for s in quotes:
+        c += '    result.append("' + s +'")' + "\n"
+
+    c += "    return result\n"
+
+    c +='''
 if __name__ == "__main__":
 
     qs = get_quotes()

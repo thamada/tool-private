@@ -123,3 +123,6 @@ cmt[113] = "\"The greatest use of life is spend it for something that will outla
 
 for i in cmt:
     if i != -1: print i
+
+# C-x r o
+# C-x r d

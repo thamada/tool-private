@@ -1,23 +1,23 @@
 #!/usr/bin/env python2
-#Time-stamp: <2016-12-30 16:09:58 hamada>
+#Time-stamp: <2016-12-30 22:25:13 hamada>
 import time
 import glob
 import logging
 import Queue
 import sys
 import os.path
-import logging
+import logging as LG
 
 # create logger
-logger = logging.getLogger('commit')
-logger.setLevel(logging.DEBUG)
+logger = LG.getLogger('commit')
+logger.setLevel(LG.DEBUG)
 
 # create console handler and set level to debug
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
+ch = LG.StreamHandler()
+ch.setLevel(LG.DEBUG)
 
 # create formatter
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = LG.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 # add formatter to ch
 ch.setFormatter(formatter)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-#Time-stamp: <2016-12-31 00:39:23 hamada>
+#Time-stamp: <2016-12-31 00:42:19 hamada>
 import time
 import glob
 import logging
@@ -104,7 +104,7 @@ if __name__ == "__main__":
     
     
     quotes  = [line.strip() for line in open(quotes_file)]
-    
+    quotes.sort()
     code = gen_code(quotes)
     
     print code

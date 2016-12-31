@@ -1,17 +1,19 @@
-#Time-stamp: <2016-12-31 00:52:19 hamada>
+#Time-stamp: <2016-12-31 11:00:33 hamada>
+
+target := mit.py
 
 all:
-	./generate.py ./short_quotes.txt > commit.py
-	chmod 755 ./commit.py
+	./generate.py ./short_quotes.txt > $(target)
+	chmod 755 $(target)
 
 
 push:
 	git add .
-	./commit.py |bash -
+	./$(target) |bash -
 
 
 clean:
-	rm -f commit.py *~ .*~
+	rm -f $(target) *~ .*~
 
 c: clean
 

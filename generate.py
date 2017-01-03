@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-#Time-stamp: <2016-12-31 11:05:30 hamada>
+#Time-stamp: <2017-01-04 01:33:51 hamada>
 import time
 import glob
 import logging
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     qs.sort()
     msg = random.choice(qs)
     cmd = 'git commit -m "' + msg + '"; git push origin master;'
-    logger.info('generated command: %s', cmd)
+    logger.info('### %s', msg)
     print cmd
 '''
     return c

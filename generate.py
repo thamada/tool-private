@@ -1,8 +1,7 @@
 #!/usr/bin/env python2
-#Time-stamp: <2017-01-04 01:33:51 hamada>
+#Time-stamp: <2017-01-07 07:55:39 hamada>
 import time
 import glob
-import logging
 import Queue
 import sys
 import os.path

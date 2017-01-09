@@ -61,12 +61,8 @@ if __name__ == "__main__":
 '''
     return c
 
-'''
-!! What a Wonderful World. !!
-'''
-if __name__ == "__main__":
 
-
+def gen_logger():
     # create logger
     logger = LG.getLogger(os.path.basename(__file__))
     logger.setLevel(LG.DEBUG)
@@ -90,10 +86,11 @@ if __name__ == "__main__":
     ## logger.warn('warn message')
     ## logger.error('error message')
     ## logger.critical('critical message')
-    
+    return logger
+
+def gen_quotes(quotes_file, logger):
     # Get list of quates from arguments
     try:
-        quotes_file = sys.argv[1]
         if not os.path.isfile(quotes_file):
             logger.error('File with list of quotes not found!: %s', quotes_file)
             sys.exit(0)
@@ -101,9 +98,19 @@ if __name__ == "__main__":
     except:
         logger.error('Pass file path to list of quotes!')
         sys.exit(0)
-    
-    
+
     quotes  = [line.strip() for line in open(quotes_file)]
     quotes.sort()
+
+    return quotes
+
+
+
+'''
+!! What a Wonderful World. !!
+'''
+if __name__ == "__main__":
+    logger = gen_logger()
+    quotes = gen_quotes(sys.argv[1], logger)
     print gen_code(quotes)
     

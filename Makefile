@@ -2,7 +2,14 @@
 
 target := mit.py
 
-all:
+
+all: eng
+
+sutra:
+	./generate.py ./HeartSutra.txt > $(target)
+	chmod 755 $(target)
+
+eng:
 	./generate.py ./short_quotes.txt > $(target)
 	chmod 755 $(target)
 

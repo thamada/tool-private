@@ -1,16 +1,12 @@
-#Time-stamp: <2016-12-31 11:00:33 hamada>
+#Time-stamp: <2017-01-12 01:19:59 hamada>
 
 target := mit.py
+source = ./short_quotes_HeartSutra.txt
+source = ./short_quotes.txt
 
 
-all: eng
-
-sutra:
-	./generate.py ./HeartSutra.txt > $(target)
-	chmod 755 $(target)
-
-eng:
-	./generate.py ./short_quotes.txt > $(target)
+all: 
+	./generate.py ${source} > $(target)
 	chmod 755 $(target)
 
 

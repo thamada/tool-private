@@ -1,4 +1,5 @@
 #!/usr/bin/env python2.7
+# -*- coding:utf-8 -*-
 #Time-stamp: <2017-01-07 07:55:39 hamada>
 import time
 import glob
@@ -11,6 +12,7 @@ import commands
 
 def gen_code(quotes):
     c = '''#!/usr/bin/env python2.7
+# -*- coding:utf-8 -*-
 import os
 import logging as LG
 import random

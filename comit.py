@@ -10,7 +10,8 @@ import commands
 import shelve
 import pickle
 
-terminal_encode = 'euc-jp'
+config_term_encode = 'euc-jp'       # set encode for your terminal
+config_db_filename = './gitcount' # set filename for your database
 
 def get_logger():
     # create logger
@@ -88,16 +89,11 @@ def get_quotes():
     result.append(u":-)                            ;-)")
     return result
 
-def test_shelve(logger):
-    fname = './shelve.dat'
+def get_shelve(fname):
     keyname = 'count'
     pickle_protocol = pickle.HIGHEST_PROTOCOL
     dic = shelve.open(fname, protocol=pickle_protocol)
     keys = dic.keys()
-
-    '''
-    if keyname in keys: logger.debug(keys)
-    '''
 
     if keyname not in keys: 
         dic[keyname] = 0
@@ -109,17 +105,21 @@ def test_shelve(logger):
     dic.close()
     return count
 
+def do_uncompress(filename):
+    return True
+
+def do_compress(filename):
+    return True
+
 if __name__ == "__main__":
     msg = ''
     logger = get_logger()
     qs = get_quotes()
-    count = test_shelve(logger)
-#    logger.debug('count = %d', count)
+    do_uncompress(config_db_filename)
+    count = get_shelve(config_db_filename)
+    do_compress(config_db_filename)
     msg = ("%d: %s" % (count+1, qs[count % len(qs)]))
-
-#    for i, quote in enumerate(qs):
-#        if i == count: msg = ("%d: %s" % (i+1, quote))
-
+    logger.info('### %s', msg.encode(config_term_encode))
     cmd = 'git commit -m "' + msg + '"; git push origin master;'
-#    logger.info('### %s', msg)
-    print cmd.encode(terminal_encode)
+    print cmd.encode(config_term_encode)
+

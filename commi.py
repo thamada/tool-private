@@ -10,16 +10,25 @@ import commands
 import shelve
 import pickle
 import sys
+import hashlib
+import re as REGEXP
 
-config_term_encode = 'euc-jp'       # set encode for your terminal
-config_db_filename = './gitcount' # set filename for your database
+# -- set encode for your terminal --
+config_term_encode = 'euc-jp'
 
-def get_logger():
+# -- set filename for your database --
+config_db_filename = '/t m p/g i t  commit-  ' 
+
+
+def get_logger(str_position = ''):
 
     log_basename = __file__
 
-    if hasattr(get_logger, '__count_called'):
-        log_basename = "%s@%d" % (__file__, get_logger.__count_called)
+    # Don't use Python's hasattr()
+    #     unless you're writing Python 3-only code 
+    #     and understand how it works.
+    if getattr(get_logger, "__count_called", None) is not None:
+        log_basename = "%s @%s" % (__file__, str_position)
         get_logger.__count_called = get_logger.__count_called + 1
         '''
         print "----------------- %d times called!!" % (get_logger.__count_called)
@@ -106,16 +115,21 @@ def get_quotes():
     result.append(u":-)                            ;-)")
     return result
 
-def get_shelve(fname):
+def get_shelve(fname, logger=None):
+    if logger is None: logger = get_logger('get_shelve()')
+
     keyname = 'count'
     pickle_protocol = pickle.HIGHEST_PROTOCOL
-    dic = shelve.open(fname, protocol=pickle_protocol)
+    try :
+        dic = shelve.open(fname, protocol=pickle_protocol)
+    except Exception as e:
+        logger.error(e)
+        logger.error(fname)
+        sys.exit(-1)
+
     keys = dic.keys()
 
-    if keyname not in keys: 
-        dic[keyname] = 0
-        dic.close()
-        dic = shelve.open(fname, protocol=pickle_protocol)
+    if keyname not in keys: dic[keyname] = 0
 
     count = dic[keyname]
     dic[keyname] = count + 1
@@ -123,25 +137,43 @@ def get_shelve(fname):
     return count
 
 def do_uncompress(filename, logger=None):
-    if logger is None: logger = get_logger()
-    check = commands.getoutput("bzip2 -d %s.db.bz2" % filename )
-    logger.debug("%s", check)
+    if logger is None: logger = get_logger('do_uncompress()')
+    check = commands.getoutput("hostname;time bzip2 -d %s.db.bz2" % filename )
+    # logger.debug("%s", check)
     return True
 
 def do_compress(filename, logger=None):
-    if logger is None: logger = get_logger()
-    check = commands.getoutput("bzip2 -9 %s.db" % filename )
-    logger.debug("%s", check)
+    if logger is None: logger = get_logger('do_compress()')
+    check = commands.getoutput("hostname;time bzip2 -9 %s.db" % filename )
+    # logger.debug("%s", check)
     return True
+
+def get_id_git(logger=None):
+    if logger is None: logger = get_logger('get_id_git()')
+    check = commands.getoutput("git remote -v")
+    # logger.debug(check)
+    md5 = hashlib.md5()
+    md5.update(check)
+    md5sum = md5.hexdigest()
+    # logger.debug(md5sum)
+    return md5sum
+
+def cut_space_str(str):
+    return REGEXP.sub(r' +', '', str)
 
 if __name__ == "__main__":
     msg = ''
     logger = get_logger()
+    md5sum = get_id_git()
+    db_filename = cut_space_str(config_db_filename + md5sum)
+
+    do_uncompress(db_filename)
+    count = get_shelve(db_filename)
+    do_compress(db_filename)
+
     qs = get_quotes()
-    do_uncompress(config_db_filename)
-    count = get_shelve(config_db_filename)
-    do_compress(config_db_filename)
     msg = ("%d: %s" % (count+1, qs[count % len(qs)]))
-    logger.info('### %s', msg.encode(config_term_encode))
+    logger.info('# %s', db_filename.encode(config_term_encode))
+    logger.info('# %s', msg.encode(config_term_encode))
     cmd = 'git commit -m "' + msg + '"; git push origin master;'
     print cmd.encode(config_term_encode)

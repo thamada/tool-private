@@ -16,7 +16,7 @@ push:
 
 
 clean:
-	rm -f $(target) *~ .*~
+	rm -f $(target) *~ .*~ *.db.bz2
 
 c: clean
 

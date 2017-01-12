@@ -15,14 +15,20 @@ config_term_encode = 'euc-jp'       # set encode for your terminal
 config_db_filename = './gitcount' # set filename for your database
 
 def get_logger():
+
     log_basename = __file__
 
-    if hasattr(get_logger, 'is_first'):
-        log_basename = "%s !!!!" % (__file__)
-        print "----------------- second time!!"
+    if hasattr(get_logger, '__count_called'):
+        log_basename = "%s %d" % (__file__, get_logger.__count_called)
+        get_logger.__count_called = get_logger.__count_called + 1
+        '''
+        print "----------------- %d time called!!" % (get_logger.__count_called)
+        '''
     else:
-        get_logger.is_first = True
-        print "----------------- first time!!"
+        get_logger.__count_called = 1
+        '''
+        print "----------------- first time called!!"
+        '''
 
     # create logger
     logger = LG.getLogger(os.path.basename(log_basename))
@@ -121,7 +127,7 @@ def do_uncompress(filename, __logger= get_logger()):
 #    __logger.debug("%s", check)
     return True
 
-def do_compress(filename):
+def do_compress(filename, __logger= get_logger()):
     return True
 
 if __name__ == "__main__":

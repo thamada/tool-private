@@ -2,4 +2,4 @@
 .*~
 /mit.py
 /tmp.txt
-
+*.db

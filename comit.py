@@ -3,12 +3,14 @@
 #
 # Copyright (c) 2017 by Tsuyoshi Hamada. All rights reserved.
 #
-
 import os
 import logging as LG
 import random
 import commands
 import shelve
+import pickle
+
+terminal_encode = 'euc-jp'
 
 def get_logger():
     # create logger
@@ -47,8 +49,6 @@ def get_quotes():
     result.append(u"7. あなたと手をつなぐこと")
     return result
 
-import pickle
-
 def test_shelve(logger):
     fname = './shelve.dat'
     keyname = 'count'
@@ -70,12 +70,17 @@ def test_shelve(logger):
     return count
 
 if __name__ == "__main__":
+    msg = ''
     logger = get_logger()
     qs = get_quotes()
-    qs.sort()
-    msg = random.choice(qs)
+#    qs.sort()
+    count = test_shelve(logger)
+    logger.debug('count = %d', count)
+    count = count % len(qs)
+    for i, quote in enumerate(qs):
+        print "i=%d, count=%d: %s" % (i, count, quote.encode(terminal_encode))
+        if i == count: msg = quote
+
     cmd = 'git commit -m "' + msg + '"; git push origin master;'
 #    logger.info('### %s', msg)
-    print cmd.encode('euc-jp')
-    count = test_shelve(logger)
-    print "count=", count
+    print cmd.encode(terminal_encode)

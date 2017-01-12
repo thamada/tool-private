@@ -64,8 +64,7 @@ def test_shelve(logger):
         dic = shelve.open(fname, protocol=pickle_protocol)
 
     count = dic[keyname]
-    count += 1
-    dic[keyname] = count
+    dic[keyname] = count + 1
     dic.close()
     return count
 
@@ -78,7 +77,7 @@ if __name__ == "__main__":
     logger.debug('count = %d', count)
     count = count % len(qs)
     for i, quote in enumerate(qs):
-        print "i=%d, count=%d: %s" % (i, count, quote.encode(terminal_encode))
+        print "i=%d: %s" % (i, quote.encode(terminal_encode))
         if i == count: msg = quote
 
     cmd = 'git commit -m "' + msg + '"; git push origin master;'

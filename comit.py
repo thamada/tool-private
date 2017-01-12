@@ -40,13 +40,51 @@ def get_logger():
 
 def get_quotes():
     result = [ ]
-    result.append(u"1. 生きているということ")
-    result.append(u"2. いま生きているということ")
-    result.append(u"3. それはのどがかわくということ")
-    result.append(u"4. 木漏れ日がまぶしいということ")
-    result.append(u"5. ふっと或るメロディを思い出すということ")
-    result.append(u"6. くしゃみをすること")
-    result.append(u"7. あなたと手をつなぐこと")
+    result.append(u"生きる -- 谷川俊太郎")
+    # -- 
+    result.append(u"生きているということ")
+    result.append(u"いま生きているということ")
+    result.append(u"それはのどがかわくということ")
+    result.append(u"木漏れ日がまぶしいということ")
+    result.append(u"ふっと或るメロディを思い出すということ")
+    result.append(u"くしゃみをすること")
+    result.append(u"あなたと手をつなぐこと")
+    # -- 
+    result.append(u"生きているということ")
+    result.append(u"いま生きているということ")
+    result.append(u"それはミニスカート")
+    result.append(u"それはプラネタリウム")
+    result.append(u"それはヨハン・シュトラウス")
+    result.append(u"それはピカソ")
+    result.append(u"それはアルプス")
+    result.append(u"すべての美しいものに出会うということ")
+    result.append(u"そして")
+    result.append(u"かくされた悪を注意深くこばむこと")
+    # --
+    result.append(u"生きているということ")
+    result.append(u"いま生きているということ")
+    result.append(u"泣けるということ")
+    result.append(u"笑えるということ")
+    result.append(u"怒れるということ")
+    result.append(u"自由ということ")
+    # --
+    result.append(u"生きているということ")
+    result.append(u"いま生きているということ")
+    result.append(u"いま遠くで犬が吠えるということ")
+    result.append(u"いま地球が廻っているということ")
+    result.append(u"いまどこかで産声があがるということ")
+    result.append(u"いまどこかで兵士が傷つくということ")
+    result.append(u"いまぶらんこがゆれているということ")
+    result.append(u"いまいまがすぎてゆくこと")
+    # --
+    result.append(u"生きているということ")
+    result.append(u"いま生きてるということ")
+    result.append(u"鳥ははばたくということ")
+    result.append(u"海はとどろくということ")
+    result.append(u"かたつむりははうということ")
+    result.append(u"人は愛するということ")
+    result.append(u"あなたの手のぬくみ")
+    result.append(u"いのちということ")
     return result
 
 def test_shelve(logger):

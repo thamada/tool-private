@@ -58,8 +58,8 @@ if __name__ == "__main__":
     qs.sort()
     msg = random.choice(qs)
     cmd = 'git commit -m "' + msg + '"; git push origin master;'
-    logger.info('### %s', msg)
-    print cmd
+    logger.info(("### %s"%msg).encode('euc-jp'))
+    print cmd.encode('euc-jp')
 '''
     return c
 

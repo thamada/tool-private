@@ -19,10 +19,10 @@ def get_logger():
     log_basename = __file__
 
     if hasattr(get_logger, '__count_called'):
-        log_basename = "%s %d" % (__file__, get_logger.__count_called)
+        log_basename = "%s@%d" % (__file__, get_logger.__count_called)
         get_logger.__count_called = get_logger.__count_called + 1
         '''
-        print "----------------- %d time called!!" % (get_logger.__count_called)
+        print "----------------- %d times called!!" % (get_logger.__count_called)
         '''
     else:
         get_logger.__count_called = 1
@@ -122,12 +122,16 @@ def get_shelve(fname):
     dic.close()
     return count
 
-def do_uncompress(filename, __logger= get_logger()):
-    check = commands.getoutput("date")
-#    __logger.debug("%s", check)
+def do_uncompress(filename, logger=None):
+    if logger is None: logger = get_logger()
+    check = commands.getoutput("bzip2 -d %s.db.bz2" % filename )
+    logger.debug("%s", check)
     return True
 
-def do_compress(filename, __logger= get_logger()):
+def do_compress(filename, logger=None):
+    if logger is None: logger = get_logger()
+    check = commands.getoutput("bzip2 -9 %s.db" % filename )
+    logger.debug("%s", check)
     return True
 
 if __name__ == "__main__":
@@ -141,4 +145,3 @@ if __name__ == "__main__":
     logger.info('### %s', msg.encode(config_term_encode))
     cmd = 'git commit -m "' + msg + '"; git push origin master;'
     print cmd.encode(config_term_encode)
-

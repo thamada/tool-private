@@ -85,6 +85,7 @@ def get_quotes():
     result.append(u"人は愛するということ")
     result.append(u"あなたの手のぬくみ")
     result.append(u"いのちということ")
+    result.append(u":-)                            ;-)")
     return result
 
 def test_shelve(logger):
@@ -93,8 +94,10 @@ def test_shelve(logger):
     pickle_protocol = pickle.HIGHEST_PROTOCOL
     dic = shelve.open(fname, protocol=pickle_protocol)
     keys = dic.keys()
-    if keyname in keys:
-        logger.debug(keys)
+
+    '''
+    if keyname in keys: logger.debug(keys)
+    '''
 
     if keyname not in keys: 
         dic[keyname] = 0
@@ -110,13 +113,12 @@ if __name__ == "__main__":
     msg = ''
     logger = get_logger()
     qs = get_quotes()
-#    qs.sort()
     count = test_shelve(logger)
-    logger.debug('count = %d', count)
-    count = count % len(qs)
-    for i, quote in enumerate(qs):
-        print "i=%d: %s" % (i, quote.encode(terminal_encode))
-        if i == count: msg = quote
+#    logger.debug('count = %d', count)
+    msg = ("%d: %s" % (count+1, qs[count % len(qs)]))
+
+#    for i, quote in enumerate(qs):
+#        if i == count: msg = ("%d: %s" % (i+1, quote))
 
     cmd = 'git commit -m "' + msg + '"; git push origin master;'
 #    logger.info('### %s', msg)

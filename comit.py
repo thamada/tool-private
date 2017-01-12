@@ -9,20 +9,24 @@ import random
 import commands
 import shelve
 import pickle
+import sys
 
 config_term_encode = 'euc-jp'       # set encode for your terminal
 config_db_filename = './gitcount' # set filename for your database
 
 def get_logger():
     log_basename = __file__
+
     if hasattr(get_logger, 'is_first'):
-        log_basename = "WARNING: %s" % log_basename
+        log_basename = "%s !!!!" % (__file__)
+        print "----------------- second time!!"
     else:
         get_logger.is_first = True
+        print "----------------- first time!!"
 
     # create logger
     logger = LG.getLogger(os.path.basename(log_basename))
-    print logger
+
     logger.setLevel(LG.DEBUG)
 
     # create console handler and set level to debug
@@ -112,9 +116,9 @@ def get_shelve(fname):
     dic.close()
     return count
 
-def do_uncompress(filename, logger= get_logger()):
+def do_uncompress(filename, __logger= get_logger()):
     check = commands.getoutput("date")
-#    logger.debug("\n%s", check)
+#    __logger.debug("%s", check)
     return True
 
 def do_compress(filename):
